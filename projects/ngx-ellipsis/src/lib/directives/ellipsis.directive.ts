@@ -21,7 +21,7 @@ import * as elementResizeDetectorMaker from 'element-resize-detector';
   selector: '[ellipsis]',
   exportAs: 'ellipsis'
 })
-export class EllipsisDirective implements OnChanges, OnDestroy, AfterViewInit {
+export class EllipsisDirective implements OnDestroy, AfterViewInit {
   /**
    * Instance of https://github.com/wnr/element-resize-detector
    */
@@ -181,25 +181,6 @@ export class EllipsisDirective implements OnChanges, OnDestroy, AfterViewInit {
     const text = this.renderer.createText(this.originalText);
     this.renderer.appendChild(this.innerElem, text);
     this.renderer.appendChild(this.elem, this.innerElem);
-
-    // start listening for resize events:
-    this.addResizeListener(true);
-  }
-
-  /**
-   * Angular's change life cycle hook.
-   * Change original text (if the ellipsis-content has been passed)
-   * and re-render
-   */
-  ngOnChanges() {
-    if (!this.elem
-      || typeof this.ellipsisContent === 'undefined'
-      || this.originalText === EllipsisDirective.escapeHtml(this.ellipsisContent)) {
-      return;
-    }
-
-    this.originalText = EllipsisDirective.escapeHtml(this.ellipsisContent);
-    this.applyEllipsis();
   }
 
   /**
